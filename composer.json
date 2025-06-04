@@ -1,0 +1,24 @@
+{
+    "name": "siza/s3service",
+    "description": "SiZA S3 Upload Service Facade",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Siza\\S3Service\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Siza\\S3Service\\SiZAS3ServiceProvider"
+            ],
+            "aliases": {
+                "SiZAS3Service": "Siza\\S3Service\\SiZAS3ServiceFacade"
+            }
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
+    }
+}
