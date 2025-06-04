@@ -2,6 +2,13 @@
     "name": "ppz/s3service",
     "description": "PPZ S3 Upload Service Facade",
     "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fathul Amin",
+            "email": "zapirolabs@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "PPZ\\S3Service\\": "src/"
