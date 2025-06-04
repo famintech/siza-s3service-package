@@ -33,7 +33,7 @@ return [
 ```
 
 - `endpoint`: The API endpoint for file uploads (default: `https://dev-upload.siza.my/api/upload`).
-- `api_key`: Your API key for authenticating requests.
+- `api_key`: Your API key for authenticating requests..
 
 Set the corresponding environment variables in your `.env` file:
 
