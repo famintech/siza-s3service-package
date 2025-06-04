@@ -15,33 +15,6 @@ Require the package via Composer:
 composer require ppz/s3service
 ```
 
-## Configuration
-
-Publish the configuration file:
-
-```bash
-php artisan vendor:publish --tag=s3service-config
-```
-
-This will create a `config/s3service.php` file with the following options:
-
-```php
-return [
-    'endpoint' => env('PPZ_S3_UPLOAD_ENDPOINT', 'https://dev-upload.siza.my/api/upload'),
-    'api_key' => env('PPZ_API_KEY'),
-];
-```
-
-- `endpoint`: The API endpoint for file uploads (default: `https://dev-upload.siza.my/api/upload`).
-- `api_key`: Your API key for authenticating requests..
-
-Set the corresponding environment variables in your `.env` file:
-
-```
-PPZ_S3_UPLOAD_ENDPOINT=https://your-upload-endpoint
-PPZ_API_KEY=your-api-key
-```
-
 ## Usage
 
 You can use the `PPZS3Service` facade to upload files to your S3-compatible API endpoint.
@@ -89,6 +62,33 @@ if (!empty($response['success']) && $response['success']) {
 > **Note:** If `tag` is `'qr'`, you must provide `emp_id`.
 
 The `upload` method returns the JSON-decoded response from the API. You can use this facade anywhere in your Laravel application for a consistent and simple file upload experience.
+
+## Configuration
+
+Publish the configuration file:
+
+```bash
+php artisan vendor:publish --tag=s3service-config
+```
+
+This will create a `config/s3service.php` file with the following options:
+
+```php
+return [
+    'endpoint' => env('PPZ_S3_UPLOAD_ENDPOINT', 'https://dev-upload.siza.my/api/upload'),
+    'api_key' => env('PPZ_API_KEY'),
+];
+```
+
+- `endpoint`: The API endpoint for file uploads (default: `https://dev-upload.siza.my/api/upload`).
+- `api_key`: Your API key for authenticating requests..
+
+Set the corresponding environment variables in your `.env` file:
+
+```
+PPZ_S3_UPLOAD_ENDPOINT=https://your-upload-endpoint
+PPZ_API_KEY=your-api-key
+```
 
 ## Service Provider & Facade
 
