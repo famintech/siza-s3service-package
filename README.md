@@ -44,20 +44,50 @@ PPZ_API_KEY=your-api-key
 
 ## Usage
 
-You can use the facade `PPZS3Service` to upload files. Example:
+You can use the `SiZAS3Service` facade to upload files to your S3-compatible API endpoint.
 
 ```php
-use PPZ\S3Service\PPZS3ServiceFacade as PPZS3Service;
+use SiZAS3Service;
 
-$response = PPZS3Service::upload([
-    'file' => $request->file('your_file_input'),
-    // ... other parameters as required by your API
+// Basic usage (required parameters)
+$response = SiZAS3Service::upload([
+    'file' => $request->file('file'), // Required: UploadedFile instance
+    'tag' => 'qr',                    // Required: Tag for the file
+    // Optional parameters (uncomment as needed):
+    // 'directory' => 'e-ejen',        // Optional: S3 directory/folder
+    // 'filename' => 'custom_name',    // Optional: Custom filename (extension will be set by API)
+    // 'is_temporary' => 1,            // Optional: 1 for temporary, 0 for permanent
+    // 'description' => 'QR E-Ejen',   // Optional: File description
+    // 'emp_id' => 'KKS020',           // Required if tag is 'qr'
 ]);
+
+// Handling the response
+if (!empty($response['success']) && $response['success']) {
+    // Success: Access file URL and other data
+    $url = $response['data']['url'];
+    // ... your logic here
+} else {
+    // Error: Check message or errors
+    $errorMsg = $response['message'] ?? 'Upload failed';
+    // ... your error handling here
+}
 ```
 
-- The `upload` method expects an array with at least a `file` key containing an instance of `UploadedFile` (from a Laravel request).
-- Additional parameters can be included in the array and will be sent along with the file.
-- The method returns the JSON-decoded response from the API.
+### Parameter Reference
+
+| Parameter     | Required | Type    | Description                                              |
+|---------------|----------|---------|----------------------------------------------------------|
+| file          | Yes      | file    | The file to upload (`UploadedFile` from Laravel request) |
+| tag           | Yes      | string  | Tag for the file (e.g. 'qr')                            |
+| directory     | No       | string  | S3 directory/folder                                      |
+| filename      | No       | string  | Custom filename (extension will be set by API)           |
+| is_temporary  | No       | bool/int| 1 for temporary, 0 for permanent                         |
+| description   | No       | string  | File description                                         |
+| emp_id        | No*      | string  | Required if tag is 'qr'                                  |
+
+> **Note:** If `tag` is `'qr'`, you must provide `emp_id`.
+
+The `upload` method returns the JSON-decoded response from the API. You can use this facade anywhere in your Laravel application for a consistent and simple file upload experience.
 
 ## Service Provider & Facade
 
