@@ -1,10 +1,10 @@
 <?php
 
-namespace Siza\S3Service;
+namespace PPZ\S3Service;
 
 use Illuminate\Support\Facades\Http;
 
-class SiZAS3Service
+class PPZS3Service
 {
     public static function upload(array $params)
     {

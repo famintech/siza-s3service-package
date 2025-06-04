@@ -1,19 +1,19 @@
 {
-    "name": "siza/s3service",
-    "description": "SiZA S3 Upload Service Facade",
+    "name": "ppz/s3service",
+    "description": "PPZ S3 Upload Service Facade",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Siza\\S3Service\\": "src/"
+            "PPZ\\S3Service\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Siza\\S3Service\\SiZAS3ServiceProvider"
+                "PPZ\\S3Service\\PPZS3ServiceProvider"
             ],
             "aliases": {
-                "SiZAS3Service": "Siza\\S3Service\\SiZAS3ServiceFacade"
+                "PPZS3Service": "PPZ\\S3Service\\PPZS3ServiceFacade"
             }
         }
     },

@@ -1,15 +1,15 @@
 <?php
 
-namespace Siza\S3Service;
+namespace PPZ\S3Service;
 
 use Illuminate\Support\ServiceProvider;
 
-class SiZAS3ServiceProvider extends ServiceProvider
+class PPZS3ServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('sizas3service', function ($app) {
-            return new SiZAS3Service();
+        $this->app->singleton('ppzs3service', function ($app) {
+            return new PPZS3Service();
         });
 
         $this->mergeConfigFrom(__DIR__.'/../config/s3service.php', 's3service');
