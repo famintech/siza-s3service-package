@@ -44,7 +44,7 @@ PPZ_API_KEY=your-api-key
 
 ## Usage
 
-You can use the `SiZAS3Service` facade to upload files to your S3-compatible API endpoint.
+You can use the `PPZS3Service` facade to upload files to your S3-compatible API endpoint.
 
 ```php
 use PPZS3Service;
