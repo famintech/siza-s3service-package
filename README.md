@@ -52,12 +52,12 @@ if (!empty($response['success']) && $response['success']) {
 | Parameter     | Required | Type    | Description                                              |
 |---------------|----------|---------|----------------------------------------------------------|
 | file          | Yes      | file    | The file to upload (`UploadedFile` from Laravel request) |
-| directory     | No       | string  | S3 directory/folder                                      |
-| filename      | No       | string  | Custom filename (extension will be set by API)           |
+| directory     | Yes      | string  | S3 directory/folder                                      |
+| filename      | No       | string  | Custom filename                                          |
 | is_temporary  | No       | bool/int| 1 for temporary, 0 for permanent                         |
-| tag           | No       | string  | Tag for the file (e.g. 'qr')                            |
+| tag           | Yes      | string  | Tag for the file (e.g. 'qr')                             |
 | description   | No       | string  | File description                                         |
-| emp_id        | No*      | string  | Required if tag is 'qr'                                  |
+| emp_id        | Yes      | string  |                                                          |
 
 > **Note:** If `tag` is `'qr'`, you must provide `emp_id`.
 
