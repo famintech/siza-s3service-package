@@ -47,10 +47,10 @@ PPZ_API_KEY=your-api-key
 You can use the `SiZAS3Service` facade to upload files to your S3-compatible API endpoint.
 
 ```php
-use SiZAS3Service;
+use PPZS3Service;
 
 // Basic usage (only 'file' is always required)
-$response = SiZAS3Service::upload([
+$response = PPZS3Service::upload([
     'file' => $request->file('file'), // Required: UploadedFile instance
 
     // Optional parameters (uncomment as needed):
