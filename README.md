@@ -49,14 +49,15 @@ You can use the `SiZAS3Service` facade to upload files to your S3-compatible API
 ```php
 use SiZAS3Service;
 
-// Basic usage (required parameters)
+// Basic usage (only 'file' is always required)
 $response = SiZAS3Service::upload([
     'file' => $request->file('file'), // Required: UploadedFile instance
-    'tag' => 'qr',                    // Required: Tag for the file
+
     // Optional parameters (uncomment as needed):
     // 'directory' => 'e-ejen',        // Optional: S3 directory/folder
     // 'filename' => 'custom_name',    // Optional: Custom filename (extension will be set by API)
     // 'is_temporary' => 1,            // Optional: 1 for temporary, 0 for permanent
+    // 'tag' => 'qr',                  // Optional: Tag for the file
     // 'description' => 'QR E-Ejen',   // Optional: File description
     // 'emp_id' => 'KKS020',           // Required if tag is 'qr'
 ]);
@@ -78,10 +79,10 @@ if (!empty($response['success']) && $response['success']) {
 | Parameter     | Required | Type    | Description                                              |
 |---------------|----------|---------|----------------------------------------------------------|
 | file          | Yes      | file    | The file to upload (`UploadedFile` from Laravel request) |
-| tag           | Yes      | string  | Tag for the file (e.g. 'qr')                            |
 | directory     | No       | string  | S3 directory/folder                                      |
 | filename      | No       | string  | Custom filename (extension will be set by API)           |
 | is_temporary  | No       | bool/int| 1 for temporary, 0 for permanent                         |
+| tag           | No       | string  | Tag for the file (e.g. 'qr')                            |
 | description   | No       | string  | File description                                         |
 | emp_id        | No*      | string  | Required if tag is 'qr'                                  |
 
