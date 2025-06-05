@@ -8,8 +8,8 @@ class PPZS3Service
 {
     public static function upload(array $params)
     {
-        $endpoint = config('s3service.endpoint');
-        $apiKey = config('s3service.api_key');
+        $endpoint = config('s3service.endpoint', env('PPZ_S3_UPLOAD_ENDPOINT'));
+        $apiKey = config('s3service.api_key', env('PPZ_API_KEY'));
 
         $files = $params['file'];
         unset($params['file']);

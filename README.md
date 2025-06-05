@@ -17,93 +17,59 @@ composer require ppz/s3service
 
 ## Usage
 
-You can use the `PPZS3Service` facade to upload files to your S3-compatible API endpoint.
+You can use the `PPZS3Service` facade to upload one or more files to your S3-compatible API endpoint.
 
 ```php
 use PPZS3Service;
 
-// Basic usage (only 'file' is always required)
+// Single file upload
 $response = PPZS3Service::upload([
     'file' => $request->file('file'), // Required: UploadedFile instance
-
-    // Optional parameters (uncomment as needed):
-    // 'directory' => 'e-ejen',        // Optional: S3 directory/folder
+    'directory' => 'e-ejen',          // Required: S3 directory/folder
+    'tag' => 'qr',                    // Required: Tag for the file
+    'emp_id' => 'KKS020',             // Required: Employee ID
+    // Optional parameters:
     // 'filename' => 'custom_name',    // Optional: Custom filename (extension will be set by API)
     // 'is_temporary' => 1,            // Optional: 1 for temporary, 0 for permanent
-    // 'tag' => 'qr',                  // Optional: Tag for the file
     // 'description' => 'QR E-Ejen',   // Optional: File description
-    // 'emp_id' => 'KKS020',           // Required if tag is 'qr'
+]);
+
+// Multiple file upload
+$response = PPZS3Service::upload([
+    'file' => $request->file('file'), // Required: array of UploadedFile instances
+    'directory' => 'e-ejen',         // Required
+    'tag' => 'qr',                   // Required
+    'emp_id' => 'KKS020',            // Required
+    // ...other optional params
 ]);
 
 // Handling the response
 if (!empty($response['success']) && $response['success']) {
-    // Success: Access file URL and other data
-    $url = $response['data']['url'];
-    // ... your logic here
+    // For single file: $response['data']
+    // For multiple files: $response['results'] (array of results)
 } else {
-    // Error: Check message or errors
     $errorMsg = $response['message'] ?? 'Upload failed';
-    // ... your error handling here
 }
 ```
 
 ### Parameter Reference
 
-| Parameter     | Required | Type    | Description                                              |
-|---------------|----------|---------|----------------------------------------------------------|
-| file          | Yes      | file    | The file to upload (`UploadedFile` from Laravel request) |
-| directory     | Yes      | string  | S3 directory/folder                                      |
-| filename      | No       | string  | Custom filename                                          |
-| is_temporary  | No       | bool/int| 1 for temporary, 0 for permanent                         |
-| tag           | Yes      | string  | Tag for the file (e.g. 'qr')                             |
-| description   | No       | string  | File description                                         |
-| emp_id        | Yes      | string  |                                                          |
+| Parameter     | Required | Type           | Description                                              |
+|---------------|----------|----------------|----------------------------------------------------------|
+| file          | Yes      | file/array     | The file(s) to upload (`UploadedFile` or array of them)  |
+| directory     | Yes      | string         | S3 directory/folder                                      |
+| tag           | Yes      | string         | Tag for the file (e.g. 'qr')                             |
+| emp_id        | Yes      | string         | Employee ID (required for all uploads)                   |
+| filename      | No       | string         | Custom filename (extension will be set by API)           |
+| is_temporary  | No       | bool/int       | 1 for temporary, 0 for permanent                         |
+| description   | No       | string         | File description                                         |
 
-> **Note:** If `tag` is `'qr'`, you must provide `emp_id`.
+> **Note:** All fields except `description`, `is_temporary`, and `filename` are required. If `tag` is `'qr'`, `emp_id` is required (but your current validation requires `emp_id` for all uploads).
 
-The `upload` method returns the JSON-decoded response from the API. You can use this facade anywhere in your Laravel application for a consistent and simple file upload experience.
+The `upload` method returns the JSON-decoded response from the API. For multiple files, the response will include a `results` array with the result for each file.
 
 ## Configuration
 
 Publish the configuration file:
 
-```bash
-php artisan vendor:publish --tag=s3service-config
 ```
-
-This will create a `config/s3service.php` file with the following options:
-
-```php
-return [
-    'endpoint' => env('PPZ_S3_UPLOAD_ENDPOINT', 'https://dev-upload.siza.my/api/upload'),
-    'api_key' => env('PPZ_API_KEY'),
-];
-```
-
-- `endpoint`: The API endpoint for file uploads (default: `https://dev-upload.siza.my/api/upload`).
-- `api_key`: Your API key for authenticating requests..
-
-Set the corresponding environment variables in your `.env` file:
-
-```
-PPZ_S3_UPLOAD_ENDPOINT=https://your-upload-endpoint
-PPZ_API_KEY=your-api-key
-```
-
-## Service Provider & Facade
-
-- **Service Provider:** `PPZ\S3Service\PPZS3ServiceProvider` is auto-discovered by Laravel.
-- **Facade:** `PPZ\S3Service\PPZS3ServiceFacade` provides the `PPZS3Service` alias for easy static access.
-
-## Advanced
-
-If you need to access the service directly (not via the facade):
-
-```php
-$service = app('ppzs3service');
-$response = $service::upload([...]);
-```
-
-## License
-
-MIT 
