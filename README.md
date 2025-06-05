@@ -72,4 +72,15 @@ The `upload` method returns the JSON-decoded response from the API. For multiple
 
 Publish the configuration file:
 
+```bash
+php artisan vendor:publish --tag=s3service-config
+```
+
+This will create a `config/s3service.php` file with the following options:
+
+Set the corresponding environment variables in your `.env` file:
+
+```
+PPZ_S3_UPLOAD_ENDPOINT=https://your-upload-endpoint
+PPZ_API_KEY=your-api-key
 ```
